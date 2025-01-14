@@ -41,3 +41,7 @@ const orderSchema = new Schema({
         }
     ]
 })
+
+const order = mainConnection.model('Order', orderSchema)
+
+module.exports = order

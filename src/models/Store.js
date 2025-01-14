@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
-
 const {Schema} = mongoose
 const {mainConnection} = require('../config/mainconnection')
+const Int32 = require("mongoose-int32").loadType(mongoose)
 
 const storeSchema = new Schema({
-    id: {type:mongoose.Types.Int32},
+    id: Int32,
     cnpj: String,
     name: String, 
     createAt: Date,

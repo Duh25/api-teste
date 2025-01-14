@@ -1,46 +1,61 @@
 const store = require('../models/Store')
 
-const store = require('../models/Store')
 
-const createStore = async (body)=>{
+exports.createStore = async (body)=>{
    try{
-      await store.create(body)
+        return {
+            status: 201,
+            message:  await store.create(body)
+        }
    }catch(error){
         throw error
    }
 }
 
-const updateStore = async (body)=>{
-    let id = body.id
+exports.updateStore = async (body)=>{
+    let filter = { "id": body.id }
+    body.updateAt = new Date(Date.now()).toISOString()
     try{
-        await store.updateOne(id, body)
+        return{
+            status: 200,
+            message: ( await store.updateOne(filter, body ) || "OK")
+        }
     }catch(error){
         throw error
     }
 }
 
-const deleteStore = async (body)=>{
+exports.deleteStore = async (body)=>{
     let id = body.id
     try{
-        await store.deleteOne(id)
+       return {
+            status: 200,
+            message: await store.deleteOne(id)
+       }
     }catch(error){
         throw error
     }
 }
 
-const findByName = async(body)=>{
+exports.findByName = async(body)=>{
     let nameUser = body.name
     try{
-      await store.findOne({name: nameUser})
+     return{
+        status: 200,
+        message:  await store.findOne({name: nameUser})
+     }
     }catch(error){
         throw error
     }
 }
 
-const findByCnpj = async(body)=>{
+exports.findByCnpj = async(body)=>{
     let cnpjUser = body.cnpjUser
     try{
-        await store.findOne({cnpj: cnpjUser})
+        return {
+            status: 200,
+            message: await store.findOne({cnpj: cnpjUser})
+        }
     }catch(error){
         throw error
     }

@@ -26,11 +26,11 @@ exports.updateStore = async (body)=>{
 }
 
 exports.deleteStore = async (body)=>{
-    let id = body.id
+    let filter = {"id" : body.id}
     try{
        return {
             status: 200,
-            message: await store.deleteOne(id)
+            message: await store.deleteOne(filter)
        }
     }catch(error){
         throw error

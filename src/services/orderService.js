@@ -17,10 +17,12 @@ exports.updateOrder = async (body)=>{
     try{
         return{
             status: 200,
-            message: ( await store.updateOne(filter, body ) || "OK")
+            message: ( await order.updateOne(filter, body ) || "OK")
         }
     }catch(error){
         throw error
     }
 }
+
+
 

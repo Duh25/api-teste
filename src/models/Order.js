@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Int32 = require("mongoose-int32").loadType(mongoose)
-const Double = require('@mongoosejs/double')
+const Double = require("mongodb").Double
 
 const {Schema} = mongoose
 const {mainConnection} = require('../config/mainconnection')

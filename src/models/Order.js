@@ -1,19 +1,21 @@
 const mongoose = require('mongoose')
+const Int32 = require("mongoose-int32").loadType(mongoose)
+const Double = require('@mongoosejs/double')
 
 const {Schema} = mongoose
 const {mainConnection} = require('../config/mainconnection')
 
 const orderSchema = new Schema({
-    id: {type:mongoose.Types.Int32},
-    store: {type:mongoose.Types.Int32},
+    id: Int32,
+    store: Int32,
     pointSale: String,
     status: String,
-    orderId: {type:mongoose.Types.Int32},
+    orderId: Int32,
     dateOfSale: Date,
-    parcial: {type:mongoose.Types.Decimal128},
-    discount: {type:mongoose.Types.Decimal128},
-    shipmentValue: {type:mongoose.Types.Decimal128},
-    total: {type:mongoose.Types.Decimal128},
+    parcial:  Double,
+    discount:  Double,
+    shipmentValue:  Double,
+    total:  Double,
     customer: {
         id: String,
         name: String,
@@ -21,7 +23,7 @@ const orderSchema = new Schema({
         rg: String,
         customerAddress:{
             address: String,
-            number: {type:mongoose.Types.Int32},
+            number: Int32,
             neighboorhood: String,
             city: String,
             state: String,
@@ -35,9 +37,9 @@ const orderSchema = new Schema({
             id: String,
             sku: String,
             name: String,
-            price: {type:mongoose.Types.Decimal128},
-            quantity: {type:mongoose.Types.Int32},
-            total: {type:mongoose.Types.Decimal128}
+            price:  Double,
+            quantity: Int32,
+            total: Double
         }
     ]
 })

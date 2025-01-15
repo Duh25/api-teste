@@ -1,5 +1,6 @@
 const store = require('../models/Store')
-
+const utils = require('../services/utils')
+const {createPagination} = require('../services/utils')
 
 exports.createStore = async (body)=>{
    try{
@@ -39,10 +40,24 @@ exports.deleteStore = async (body)=>{
 
 exports.find = async(body)=>{
     let filter = body
+    let page = body.page || 1
+    let limit = body.limit || 5
+    let total = store.countDocuments()
+
     try{
-        return { 
+        let paging = await createPagination(page, limit)
+        paging.total = await total.countDocuments()
+        
+        delete filter.limit 
+        delete filter.page
+
+        
+        return{
             status: 200,
-            message: await store.find(filter) 
+            message: {
+                paging,
+                "data": await store.find(filter).skip(paging.offset).limit(paging.limit)
+            }    
         }
     }catch(error){
         throw error

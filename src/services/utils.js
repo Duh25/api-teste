@@ -5,24 +5,12 @@ exports.sendHello = async ()=>{
         }
     }
 
- exports.createPagination = async (page, limit, total)=>{
-
-    page = parseInt(page) || 1;
-    limit = parseInt(limit) || 3;
-
-    const startIndex = (page - 1) * limit;
-    
-    return{
-        query_data: {
-            startIndex,
-            limit
-        },
-        data : {
-            page,
-            limit,
-            total,
-            
-        }
+ exports.createPagination = async (page, limit)=>{
+    return{ 
+        "total": undefined,
+        "page": page,
+        "limit": limit,
+        "offset": ((page - 1) * limit)
     }
 
  }

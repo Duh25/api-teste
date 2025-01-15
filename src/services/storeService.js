@@ -37,26 +37,15 @@ exports.deleteStore = async (body)=>{
     }
 }
 
-exports.findByName = async(body)=>{
-    let nameUser = body.name
+exports.find = async(body)=>{
+    let filter = body
     try{
-     return{
-        status: 200,
-        message:  await store.findOne({name: nameUser})
-     }
-    }catch(error){
-        throw error
-    }
-}
-
-exports.findByCnpj = async(body)=>{
-    let cnpjUser = body.cnpjUser
-    try{
-        return {
+        return { 
             status: 200,
-            message: await store.findOne({cnpj: cnpjUser})
+            message: await store.find(filter) 
         }
     }catch(error){
         throw error
     }
 }
+

@@ -1,3 +1,5 @@
+const crypto = require('crypto')
+
 exports.sendHello = async ()=>{
         return {
             status : 200,
@@ -15,3 +17,14 @@ exports.sendHello = async ()=>{
 
  }
 
+ exports.hashCode = async (str)=>{
+    try{
+        return crypto.createHash('sha256').update(str).digest('hex')
+    }catch(error){
+        throw error
+    }
+ }
+
+exports.todayISOdate = async ()=>{
+    return new Date(Date.now()).toISOString()
+}

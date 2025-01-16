@@ -1,6 +1,7 @@
 const order = require("../models/Order")
+const {createPagination} = require("../services/utils")
 
-exports.createOrder = async(body)=>{
+exports.createOrder = async(body)=> {
     try{
         return{
             status: 201,
@@ -11,7 +12,7 @@ exports.createOrder = async(body)=>{
     }
 }
 
-exports.updateOrder = async (body)=>{
+exports.updateOrder = async (body)=> {
     let filter = { "id": body.id }
     body.dateOfSale = new Date(Date.now()).toISOString()
     try{
@@ -24,5 +25,34 @@ exports.updateOrder = async (body)=>{
     }
 }
 
+exports.deleteOrder = async (body)=> {
+    let filter = {"id" : body.id}
+    try{
+       return {
+            status: 200,
+            message: await order.deleteOne(filter)
+       }
+    }catch(error){
+        throw error
+    }
+}
 
+exports.find = async(body)=> {
+    const {page=1, limit=5, ...filter} = body
+    const total = await order.countDocuments()
+
+    try{
+        let paging = await createPagination(page, limit, total)
+        
+        return{
+            status: 200,
+            message: {
+                paging,
+                "data": await order.find(filter).skip(paging.offset).limit(paging.limit)
+            }    
+        }
+    }catch(error){
+        throw error
+    }
+}
 

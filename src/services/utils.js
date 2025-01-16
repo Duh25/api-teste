@@ -5,9 +5,9 @@ exports.sendHello = async ()=>{
         }
     }
 
- exports.createPagination = async (page, limit)=>{
+ exports.createPagination = async (page, limit, total)=>{
     return{ 
-        "total": undefined,
+        "total": total,
         "page": page,
         "limit": limit,
         "offset": ((page - 1) * limit)

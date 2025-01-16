@@ -39,18 +39,11 @@ exports.deleteStore = async (body)=>{
 }
 
 exports.find = async(body)=>{
-    let filter = body
-    let page = body.page || 1
-    let limit = body.limit || 5
-    let total = store.countDocuments()
+    const {page=1, limit=5, ...filter} = body
+    const total = await store.countDocuments()
 
     try{
-        let paging = await createPagination(page, limit)
-        paging.total = await total.countDocuments()
-        
-        delete filter.limit 
-        delete filter.page
-
+        let paging = await createPagination(page, limit, total)
         
         return{
             status: 200,

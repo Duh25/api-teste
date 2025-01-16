@@ -1,8 +1,8 @@
 const sendHello = require('../services/utils')
 const create = require('../services/storeService')
+const utils = require('../services/utils')
 
 
 exports.getHello = async (req, res) =>{
-    let a = await sendHello()
-    res.status(a.status).json(a.message)
+    res.status(200).json({message: "OK"})
 }

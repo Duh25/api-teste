@@ -1,4 +1,4 @@
-const {createUser,findUser} = require('../services/userService')
+const {createUser,findUser, updatePassword} = require('../services/userService')
 
 exports.createUser = async (req, res)=>{
     try{
@@ -13,6 +13,15 @@ exports.find = async (req, res)=>{
     let filter = req.query
     try{
         const {status, message} = await findUser(filter)
+        res.status(status).json(message)
+    }catch(error){
+        res.status(400).json({message: error.message})
+    }
+}
+
+exports.updatePassword = async (req, res) =>{
+    try{
+        const {status, message} = await updatePassword(req.body)
         res.status(status).json(message)
     }catch(error){
         res.status(400).json({message: error.message})

@@ -1,4 +1,6 @@
 const crypto = require('crypto')
+const excel = require('exceljs')
+const path = require('path')
 
 exports.sendHello = async ()=>{
         return {
@@ -14,7 +16,6 @@ exports.sendHello = async ()=>{
         "limit": limit,
         "offset": ((page - 1) * limit)
     }
-
  }
 
  exports.hashCode = async (str)=>{
@@ -27,4 +28,8 @@ exports.sendHello = async ()=>{
 
 exports.todayISOdate = async ()=>{
     return new Date(Date.now()).toISOString()
+}
+
+exports.toExcel = async ([data], headers)=>{
+        
 }

@@ -1,5 +1,5 @@
 const user = require('../models/User')
-const {createPagination} = require('../services/utils')
+const utils = require('../services/utils')
 
 exports.createUser = async (body)=>{
     try{
@@ -19,7 +19,7 @@ exports.findUser = async (body)=>{
     const total = await user.countDocuments()
 
     try{
-        let paging = await createPagination(page, limit, total)
+        let paging = await utils.createPagination(page, limit, total)
         
         return{
             status: 200,
@@ -33,18 +33,36 @@ exports.findUser = async (body)=>{
     }
 }
 
-exports.updatePassword = async (id, pass)=>{
-    let filter = { "id": body.id }
-    let nw =  (await findUser(filter)).message.data
-
-    nw.password = utils.hashCode(pass)
-    mw.updateAt = utils.todayISOdate
+exports.updatePassword = async (body)=>{
+    const {id, password} = body
+    let filter = {"id" : id}
+  
     try{
+
+        const us = (await this.findUser(filter)).message.data[0]
+      
+        const newOb = newObject(us)
+        
+        newOb.password = await utils.hashCode(""+password)
+
         return{
             status: 200,
-            message: ( await user.updateOne(filter, nw))
+            message: await user.updateOne(filter, newOb)
         }
     }catch(error){
-        throw error
+        console.log(error)
     }
+
 }
+
+async function newObject(body){
+    return {
+        "store": body.store,
+        "id": body.id,
+        "username": body.username,
+        "password": body.password,
+        "createat": body.createAt,
+        "updateAt": await utils.todayISOdate()
+    }
+} 
+

@@ -1,4 +1,4 @@
-const {createUser} = require('../services/userService')
+const {createUser, singIn} = require('../services/userService')
 
 exports.createUser = async (req, res) =>{
     try{
@@ -9,4 +9,12 @@ exports.createUser = async (req, res) =>{
     }
 }
 
+exports.singIn = async (req,res) =>{
+    try{
+        const {status, message } = await singIn(req.body)
 
+        res.status(status).json({message: message})
+    }catch(error){
+        res.status(400).json(error.message)
+    }
+}

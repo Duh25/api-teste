@@ -18,9 +18,10 @@ exports.sendHello = async ()=>{
     }
  }
 
- exports.hashCode = async (str)=>{
+ exports.hashCode = (str)=>{
+
     try{
-        return crypto.createHash('sha256').update(str).digest('hex')
+        return crypto.createHash('sha256').update(toString(str)).digest('hex')
     }catch(error){
         throw error
     }
@@ -57,4 +58,8 @@ exports.toExcel = async (data, headers)=>{
 const normalizeObj = (obj)=>{
     obj["customer_name"] = obj.customer.name
     return obj
+}
+
+const toString = (str)=>{
+    return str+""
 }

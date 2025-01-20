@@ -1,4 +1,4 @@
-const {createStore, updateStore, findByCnp, findByName, deleteStore, find} = require('../services/storeService')
+const {createStore, updateStore, deleteStore, find} = require('../services/storeService')
 
 exports.createStore = async (req,res) =>{
     try{

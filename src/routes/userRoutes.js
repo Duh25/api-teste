@@ -5,7 +5,7 @@ const {createUser, find, updatePassword} = require('../controllers/userControlle
 
 const router = express.Router()
 
-router.post('/create', createUser)
+// router.post('/create', createUser)
 router.get('/find', find)
 router.put('/update', updatePassword)
 

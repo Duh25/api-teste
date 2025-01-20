@@ -1,17 +1,16 @@
 const sendHello = require('../services/utils')
 const {findAll} = require('../services/orderService')
 const {toHeaders, toExcel} = require('../services/utils')
-
+const {singIn} = require('../services/userService')
 
 
 
 exports.getHello = async (req, res) =>{
     try{
-       let data = (await findAll())
-       
-       let path = await toExcel(data, headers)
+        
+        const {status, message } = await singIn(req.body)
 
-       res.status(200).json({message: "OK"})
+       res.status(status).json({message: message})
     }catch(error){
         res.status(400).json(error.message)
     }

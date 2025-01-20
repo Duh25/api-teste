@@ -55,6 +55,42 @@ exports.updatePassword = async (body)=>{
 
 }
 
+exports.singIn = async (body)=>{
+    const { store , username, password} = body
+
+    let filter = {
+        username: username
+    }
+    try{
+        let userverify = (await user.find(filter))[0]
+
+        if(userverify === null || userverify === undefined){
+            return{
+                status: 401,
+                message: "Usuário Inexistente"
+            }
+        }
+
+      if(store === userverify.store && utils.hashCode(password) === (userverify.password) ){
+        return{
+            status: 200,
+            message: "Usuário Logado"
+        }
+      }else{
+        return{
+            status: 401,
+            message: "Credenciais incorretas" 
+        }
+      }
+
+
+
+    }catch(error){
+        throw error
+    }
+
+}
+
 async function newObject(body){
     return {
         "store": body.store,

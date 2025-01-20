@@ -42,17 +42,44 @@ exports.find = async(body)=> {
     const total = await order.countDocuments()
 
     try{
+
         let paging = await createPagination(page, limit, total)
-        
+    
         return{
             status: 200,
             message: {
                 paging,
-                "data": await order.find(filter).skip(paging.offset).limit(paging.limit)
+                "data": await order.find(convertDates(filter)).skip(paging.offset).limit(paging.limit)
             }    
         }
     }catch(error){
         throw error
     }
 }
+
+exports.findByDate = async(body)=>{
+    const {min, max} = body
+    let filter = {
+        'dateOfSale': {
+         '$gte': new Date(min), 
+         '$lte': new Date(max)
+        }
+    }
+    let sortConfig = {
+        dateOfSale: 1
+    }
+    
+    try{
+
+        return{
+            status: 200,
+            message: {
+                "data": await order.find(filter).sort(sortConfig)
+            }    
+        }
+    }catch(error){
+        throw error
+    }
+}
+
 

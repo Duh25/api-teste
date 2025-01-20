@@ -1,4 +1,4 @@
-const {createOrder, updateOrder, deleteOrder, find} = require("../services/orderService")
+const {createOrder, updateOrder, deleteOrder, find, findByDate} = require("../services/orderService")
 
 exports.createOrder = async (req, res)=>{
     try{
@@ -28,9 +28,9 @@ exports.deleteOrder = async (req, res) =>{
 }
 
 exports.find = async (req,res)=>{
-    let filter = req.query
+    
     try{
-        const {status, message} = await find(filter)
+        const {status, message} = await find(req.body)
         res.status(status).json({message})
     }catch(error){
         res.status(400).json({message : error.message})

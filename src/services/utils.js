@@ -26,11 +26,11 @@ exports.sendHello = async ()=>{
     }
  }
 
-exports.todayISOdate = async ()=>{
+exports.todayISOdate = ()=>{
     return new Date(Date.now()).toISOString()
 }
 
-exports.toExcel = async (data, headers, path)=>{
+exports.toExcel = async (data, headers)=>{
     const workbook = new excel.Workbook();
     const worksheet = workbook.addWorksheet('test');
     worksheet.columns = headers
@@ -43,7 +43,7 @@ exports.toExcel = async (data, headers, path)=>{
         worksheet.addRow(element)
     });
 
-    const filePath = path.resolve(path, `${Date.now().toString()}.xls`)
+    const filePath = path.resolve('C:\\Users\\User\\Documents\\Eduardo\\api\\resources', `${Date.now()}.xls`)
 
     try{
         await workbook.xlsx.writeFile(filePath)

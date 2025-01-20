@@ -49,11 +49,25 @@ exports.find = async(body)=> {
             status: 200,
             message: {
                 paging,
-                "data": await order.find(convertDates(filter)).skip(paging.offset).limit(paging.limit)
+                "data": await order.find(filter).skip(paging.offset).limit(paging.limit)
             }    
         }
     }catch(error){
         throw error
+    }
+}
+
+exports.findAllDocuments = async(body)=>{
+    const filter = body
+    try{
+        return{
+            status: 200,
+            message: {
+                "data": await order.find(filter)
+            }
+        }
+    }catch(error){
+
     }
 }
 
@@ -68,7 +82,7 @@ exports.findByDate = async(body)=>{
     let sortConfig = {
         dateOfSale: 1
     }
-    
+
     try{
 
         return{
@@ -82,4 +96,22 @@ exports.findByDate = async(body)=>{
     }
 }
 
+exports.findByStatus = async (body)=>{
+    const {status} = body
+
+    let filter = {
+        'status': status
+    }
+
+    try{
+        return{
+            status: 200,
+            message: {
+                "data": await order.findAllDocuments(filter)
+            }
+        }
+    }catch(error){
+        throw error
+    }
+}
 

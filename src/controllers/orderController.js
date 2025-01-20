@@ -20,7 +20,7 @@ exports.updateOrder = async (req, res) =>{
 
 exports.deleteOrder = async (req, res) =>{
     try{
-        const {status, message } = await deleteOrder(req.body)
+        const {status, message } = await deleteOrder(req.params)
         res.status(status).json({message})
     }catch(error){
         res.status(400).json({message: error.message})

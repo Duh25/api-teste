@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.post('/create', createOrder)
 router.put('/update', updateOrder)
-router.delete('/delete', deleteOrder)
+router.delete('/delete/:id', deleteOrder)
 router.get('/find', find)
 
 

@@ -1,5 +1,4 @@
 const crypto = require('crypto')
-const { on } = require('events')
 const excel = require('exceljs')
 const path = require('path')
 
@@ -37,14 +36,14 @@ exports.toExcel = async (data, headers, path)=>{
     worksheet.columns = headers
 
     data.forEach((i)=>{
-        data[i] = test(i)
+        data[i] = normalizeObj(i)
     })
     
     data.forEach(element => {
         worksheet.addRow(element)
     });
 
-    const filePath = path.resolve(path, `${Date.now()}-plan.xls`)
+    const filePath = path.resolve(path, `${Date.now().toString()}.xls`)
 
     try{
         await workbook.xlsx.writeFile(filePath)
@@ -55,7 +54,7 @@ exports.toExcel = async (data, headers, path)=>{
     return filePath
 }
 
-const test = (obj)=>{
+const normalizeObj = (obj)=>{
     obj["customer_name"] = obj.customer.name
     return obj
 }

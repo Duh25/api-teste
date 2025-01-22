@@ -12,8 +12,8 @@ exports.sendHello = async ()=>{
  exports.createPagination = async (page, limit, total)=>{
     return{ 
         "total": total,
-        "page": page,
-        "limit": limit,
+        "page": parseInt(page),
+        "limit": parseInt(limit),
         "offset": ((page - 1) * limit)
     }
  }

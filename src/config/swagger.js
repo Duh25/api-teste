@@ -8,7 +8,7 @@ const options = {
     info: {
       title: "API Documentation",
       version: "1.0.0",
-      description: "Descrição da sua API",
+      description: "TESTE TECNICO OTAVIO",
     },
     servers: [
       {

@@ -1,8 +1,9 @@
 const store = require('../models/Store')
 const utils = require('../services/utils')
-const {createPagination} = require('../services/utils')
+const {createPagination, getNextId} = require('../services/utils')
 
 exports.createStore = async (body)=>{
+    body.id = await getNextId(store)
    try{
         return {
             status: 201,

@@ -1,7 +1,8 @@
 const order = require("../models/Order")
-const {createPagination} = require("../services/utils")
+const {createPagination, getNextId} = require("../services/utils")
 
 exports.createOrder = async(body)=> {
+    body.orderId = await getNextId(order)
     try{
         return{
             status: 201,

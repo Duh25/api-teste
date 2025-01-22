@@ -55,6 +55,10 @@ exports.toExcel = async (data, headers)=>{
     return filePath
 }
 
+exports.getNextId = async (model)=>{
+    return await model.countDocuments() + 1
+}
+
 const normalizeObj = (obj)=>{
     obj["customer_name"] = obj.customer.name
     return obj

@@ -6,7 +6,7 @@ const {mainConnection} = require('../config/mainconnection')
 
 const userSchema = new Schema({
     store : Int32,
-    id: String,
+    id: Int32,
     username: String, 
     password: String,
     createAt: Date,

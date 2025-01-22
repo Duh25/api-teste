@@ -1,9 +1,11 @@
+const order = require('../models/Order')
 const user = require('../models/User')
 const utils = require('../services/utils')
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
 exports.createUser = async (body)=>{
+    body.id = parseInt(await utils.getNextId(user))
     try{
         body.password = await utils.hashCode(body.password)
         body.createAt = await utils.todayISOdate()

@@ -1,5 +1,7 @@
 const user = require('../models/User')
 const utils = require('../services/utils')
+require('dotenv').config()
+const jwt = require('jsonwebtoken')
 
 exports.createUser = async (body)=>{
     try{
@@ -55,7 +57,7 @@ exports.updatePassword = async (body)=>{
 
 }
 
-exports.singIn = async (body)=>{
+exports.signIn = async (body)=>{
     const { store , username, password} = body
 
     let filter = {
@@ -72,9 +74,16 @@ exports.singIn = async (body)=>{
         }
 
       if(store === userverify.store && utils.hashCode(password) === (userverify.password) ){
+
+        const accessToken = jwt.sign({store: store, user: userverify.id }, process.env.JWT_SECRET, {expiresIn: '1h'})
+        const refreshToken =  jwt.sign({store: store, user: userverify.id }, process.env.JWT_SECRET, {expiresIn: '1d'})
+
         return{
             status: 200,
-            message: "Usuário Logado"
+            message: {
+                accessToken: accessToken,
+                refreshToken: refreshToken
+            }
         }
       }else{
         return{
@@ -87,6 +96,30 @@ exports.singIn = async (body)=>{
         throw error
     }
 
+}
+
+// exports.signOut = async (body)=>{
+
+// }
+
+exports.getNewAccesToken = async (body)=>{
+    let refreshToken = body
+    try{
+       const {store, user} = await jwt.verify(refreshToken, process.env.JWT_SECRET)
+       const accessToken = jwt.sign({store: store, user: user }, process.env.JWT_SECRET, {expiresIn: '1h'})
+
+       return{
+         status: 200,
+         message: {
+            accessToken: accessToken
+         }
+       }
+
+    }catch(error){
+        throw error
+    }
+
+    
 }
 
 async function newObject(body){
